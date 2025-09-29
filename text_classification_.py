@@ -73,7 +73,7 @@ def test_model_output_range():
 test_model_output_range()
 
 model.compile(optimizer = 'adam',
-              loss = tf.keras.losses.BinaryCrossentropy(from_logits = True),
+              loss = tf.keras.losses.BinaryCrossentropy(from_logits = False),
               metrics = ['accuracy'])
 
 history = model.fit(train_data.shuffle(10000).batch(100),
@@ -105,25 +105,3 @@ def plot_class_distribution():
 
 plot_class_distribution()
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-# Heatmap: Batch-wise Positive/Negative Counts
-def plot_class_heatmap(batch_size=100, num_batches=10):
-    counts = []
-
-    # Take first `num_batches` batches
-    for batch_num, (_, labels) in enumerate(train_data.batch(batch_size).take(num_batches)):
-        labels_np = labels.numpy()
-        pos = np.sum(labels_np == 1)
-        neg = np.sum(labels_np == 0)
-        counts.append([pos, neg])
-
-    counts = np.array(counts)  # shape: (num_batches, 2)
-
-    plt.figure(figsize=(6,5))
-    sns.heatmap(counts, annot=True, fmt="d", cmap="YlGnBu", xticklabels=['Positive','Negative'], yticklabels=[f'Batch {i+1}' for i in range(num_batches)])
-    plt.title("Batch-wise Positive/Negative Review Counts")
-    plt.ylabel("Batch Number")
-    plt.show()
-
-plot_class_heatmap()
