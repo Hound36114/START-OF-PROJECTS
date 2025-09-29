@@ -14,15 +14,13 @@ import tensorflow_datasets as tfds
 
 train_data, validation_data, test_data = tfds.load(name = 'imdb_reviews',
                                                   split = ('train[:60%]', 'train[60%:]', 'test'),
-                                                  as_supervised = True)
+                                                  as_supervised = True)    
+def test_dataset_not_empty():
+    example = next(iter(train_data))
+    assert example is not None, "Training dataset is empty!"
 
-
-
-test_data_shapes()  # Run test immediately
-  batch, label = next(iter(train_data.batch(10)))
-    assert len(batch) > 0, "Batch is empty!"
-    assert len(label) > 0, "Labels are empty!"
-test_data_shapes()
+test_dataset_not_empty()
+print("Dataset not empty test passed ✅")
 
 def test_label_values():
     batch, label = next(iter(train_data.batch(10)))
