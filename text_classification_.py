@@ -20,7 +20,6 @@ def test_dataset_not_empty():
     assert example is not None, "Training dataset is empty!"
 
 test_dataset_not_empty()
-print("Dataset not empty test passed ✅")
 
 def test_label_values():
     batch, label = next(iter(train_data.batch(10)))
